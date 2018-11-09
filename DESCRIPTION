@@ -2,7 +2,7 @@ Package: glmmfields
 Type: Package
 Title: Generalized Linear Mixed Models with Robust Random Fields for
         Spatiotemporal Modeling
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: c(
     person(c("Sean", "C."), "Anderson", email = "sean@seananderson.ca",
       role = c("aut", "cre")),
@@ -16,23 +16,24 @@ Description: Implements Bayesian spatial and spatiotemporal models that
     <doi:10.1002/ecy.2403>.
 License: GPL (>= 3)
 Encoding: UTF-8
-Depends: R (>= 3.3.0), Rcpp (>= 0.12.0)
-Imports: rstan (>= 2.16.0), ggplot2 (>= 2.2.0), cluster, dplyr (>=
+Depends: R (>= 3.4.0), Rcpp (>= 0.12.0)
+Imports: rstan (>= 2.18.1), ggplot2 (>= 2.2.0), cluster, dplyr (>=
         0.7.0), reshape2, mvtnorm, broom, methods, loo, assertthat,
-        nlme, forcats, rstanarm
-LinkingTo: StanHeaders (>= 2.16.0), rstan (>= 2.16.0), BH (>= 1.62.0),
+        nlme, forcats, rstantools
+LinkingTo: StanHeaders (>= 2.18.0), rstan (>= 2.18.1), BH (>= 1.66.0),
         Rcpp (>= 0.12.0), RcppEigen
 Suggests: testthat, parallel, bayesplot, knitr, rmarkdown, viridis,
         coda
 URL: https://github.com/seananderson/glmmfields
 BugReports: https://github.com/seananderson/glmmfields/issues
-RoxygenNote: 6.0.1.9000
+RoxygenNote: 6.1.1
 VignetteBuilder: knitr
+SystemRequirements: GNU make
 NeedsCompilation: yes
-Packaged: 2018-06-19 15:16:39 UTC; seananderson
+Packaged: 2018-11-08 19:01:50 UTC; eric.ward
 Author: Sean C. Anderson [aut, cre],
   Eric J. Ward [aut],
   Trustees of Columbia University [cph]
 Maintainer: Sean C. Anderson <sean@seananderson.ca>
 Repository: CRAN
-Date/Publication: 2018-06-24 10:47:54 UTC
+Date/Publication: 2018-11-09 14:30:26 UTC
