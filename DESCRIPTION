@@ -2,7 +2,7 @@ Package: glmmfields
 Type: Package
 Title: Generalized Linear Mixed Models with Robust Random Fields for
         Spatiotemporal Modeling
-Version: 0.1.2
+Version: 0.1.3
 Authors@R: c(
     person(c("Sean", "C."), "Anderson", email = "sean@seananderson.ca",
       role = c("aut", "cre")),
@@ -30,10 +30,10 @@ RoxygenNote: 6.1.1
 VignetteBuilder: knitr
 SystemRequirements: GNU make
 NeedsCompilation: yes
-Packaged: 2019-03-08 01:29:39 UTC; seananderson
+Packaged: 2019-05-17 23:24:40 UTC; seananderson
 Author: Sean C. Anderson [aut, cre],
   Eric J. Ward [aut],
   Trustees of Columbia University [cph]
 Maintainer: Sean C. Anderson <sean@seananderson.ca>
 Repository: CRAN
-Date/Publication: 2019-03-08 11:30:07 UTC
+Date/Publication: 2019-05-18 04:40:03 UTC

@@ -1,6 +1,6 @@
-22374c31066c7adbd65b06580256006f *DESCRIPTION
+8792eea042d696ba41658ff868330f50 *DESCRIPTION
 616360d02ede2594e93f3106dafe8ade *NAMESPACE
-e096dbf1f8aac1c5bd7114b07ae1aaf0 *NEWS.md
+dbee5c6dc4a1b28bf8bca118831adb94 *NEWS.md
 591501246e19faa6fa46d5db1192581e *R/family.R
 77faaf450642ecf32fc37d488f3fa8c6 *R/fitting.R
 8f87959bc9c0025114d13f40dfe9775f *R/format_data.R
@@ -13,11 +13,11 @@ f7ab4a772c625c913e9ab20f8854e6eb *R/methods.R
 db68c0796882372fe8a4a15f76a00567 *R/stan_pars.R
 1c8249eb55b244cf8fa0b573b65d1570 *R/stanmodels.R
 aefbc5c00caad6ec520914cfe1c22bf3 *R/zzz.R
-4019727ad6ce7f1544b44422c9412da3 *build/vignette.rds
+eb3d026be293a303f990a479e42e50c0 *build/vignette.rds
 88f64e7df66edcf1e4bd7b0abc3412ab *inst/CITATION
 46821458a53aa161f65651d8c0bc1e95 *inst/doc/spatial-glms.R
 f01f9b33ec98a387b544845a28fce364 *inst/doc/spatial-glms.Rmd
-56776fca05032513f69d06c7623e32d6 *inst/doc/spatial-glms.html
+96394841ce82597b900c1869fd2d7075 *inst/doc/spatial-glms.html
 855c064dbf8deaff96c8dc8a87169109 *inst/include/meta_header.hpp
 9e888023dd26dc4cb904d14bb220b66e *inst/test.R
 1ca424fc357b532dc0d5558f694a3251 *man/format_data.Rd
@@ -32,8 +32,8 @@ fd3ea29fba1004c2c821f73131a3a369 *man/priors.Rd
 de1cbec149575276c6d2bca16310facd *man/sim_glmmfields.Rd
 d4a3b643723aa30aa41a74f5a2f4fe50 *man/stan_pars.Rd
 d7466e066fa9fd20977c3dfa70b8bb39 *man/tidy.Rd
-732a04a1d2dd3d97c404ab3dd85712db *src/Makevars
-6a7e706589ebbbf268230ef9fdd72dca *src/Makevars.win
+e385b69646bcc4555858feb68eb1f52e *src/Makevars
+2d00973d800c4813504154a0267fe2f8 *src/Makevars.win
 d41d8cd98f00b204e9800998ecf8427e *src/Modules.cpp
 bca3e8755f348f81552bb65fc6001da6 *src/init.cpp
 d41d8cd98f00b204e9800998ecf8427e *src/stan_files/chunks/common_functions.stan
