@@ -1,16 +1,16 @@
-## ----set-knitr-options, cache=FALSE, echo=FALSE--------------------------
+## ----set-knitr-options, cache=FALSE, echo=FALSE-------------------------------
 library("knitr")
 opts_chunk$set(message = FALSE, fig.width = 5.5)
 
-## ---- message=FALSE, warning=FALSE---------------------------------------
+## ---- message=FALSE, warning=FALSE--------------------------------------------
 library(glmmfields)
 library(ggplot2)
 library(dplyr)
 
-## ---- echo=TRUE, eval=FALSE----------------------------------------------
+## ---- echo=TRUE, eval=FALSE---------------------------------------------------
 #  options(mc.cores = parallel::detectCores())
 
-## ----simulate-data-------------------------------------------------------
+## ----simulate-data------------------------------------------------------------
 set.seed(1)
 N <- 200 # number of data points
 temperature <- rnorm(N, 0, 1) # simulated temperature data
@@ -27,7 +27,7 @@ ggplot(s$dat, aes(lon, lat, colour = y)) +
   viridis::scale_colour_viridis() +
   geom_point(size = 3)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 m_glm <- glm(y ~ temperature, data = d, family = Gamma(link = "log"))
 m_glm
 confint(m_glm)
@@ -36,7 +36,7 @@ ggplot(d, aes(lon, lat, colour = m_glm_residuals)) +
   scale_color_gradient2() +
   geom_point(size = 3)
 
-## ---- results='hide'-----------------------------------------------------
+## ---- results='hide'----------------------------------------------------------
 m_spatial <- glmmfields(y ~ temperature,
   data = d, family = Gamma(link = "log"),
   lat = "lat", lon = "lon", nknots = 12, iter = 500, chains = 1,
@@ -48,22 +48,22 @@ m_spatial <- glmmfields(y ~ temperature,
   seed = 123 # passed to rstan::sampling()
 )
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 m_spatial
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 plot(m_spatial, type = "spatial-residual", link = TRUE) +
   geom_point(size = 3)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 plot(m_spatial, type = "residual-vs-fitted")
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 plot(m_spatial, type = "prediction", link = FALSE) +
   viridis::scale_colour_viridis() +
   geom_point(size = 3)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 # link scale:
 p <- predict(m_spatial)
 head(p)
@@ -76,10 +76,10 @@ head(p)
 p <- predict(m_spatial, type = "response", interval = "prediction")
 head(p)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 head(tidy(m_spatial, conf.int = TRUE, conf.method = "HPDinterval"))
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 pred_grid <- expand.grid(lat = seq(min(d$lat), max(d$lat), length.out = 30),
   lon = seq(min(d$lon), max(d$lon), length.out = 30))
 pred_grid$temperature <- mean(d$temperature)

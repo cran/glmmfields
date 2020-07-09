@@ -4,18 +4,36 @@
 \alias{glmmfields}
 \title{Fit a spatiotemporal random fields GLMM}
 \usage{
-glmmfields(formula, data, lon, lat, time = NULL, nknots = 15L,
-  prior_gp_theta = half_t(3, 0, 5), prior_gp_sigma = half_t(3, 0, 5),
-  prior_sigma = half_t(3, 0, 5), prior_rw_sigma = half_t(3, 0, 5),
-  prior_intercept = student_t(3, 0, 10), prior_beta = student_t(3, 0,
-  3), prior_phi = student_t(1000, 0, 0.5), fixed_df_value = 1000,
-  fixed_phi_value = 0, estimate_df = FALSE, estimate_ar = FALSE,
+glmmfields(
+  formula,
+  data,
+  lon,
+  lat,
+  time = NULL,
+  nknots = 15L,
+  prior_gp_theta = half_t(3, 0, 5),
+  prior_gp_sigma = half_t(3, 0, 5),
+  prior_sigma = half_t(3, 0, 5),
+  prior_rw_sigma = half_t(3, 0, 5),
+  prior_intercept = student_t(3, 0, 10),
+  prior_beta = student_t(3, 0, 3),
+  prior_phi = student_t(1000, 0, 0.5),
+  fixed_df_value = 1000,
+  fixed_phi_value = 0,
+  estimate_df = FALSE,
+  estimate_ar = FALSE,
   family = gaussian(link = "identity"),
   covariance = c("squared-exponential", "exponential", "matern"),
-  matern_kappa = 0.5, algorithm = c("sampling", "meanfield"),
-  year_re = FALSE, nb_lower_truncation = 0,
-  control = list(adapt_delta = 0.9), save_log_lik = FALSE,
-  df_lower_bound = 2, cluster = c("pam", "kmeans"), ...)
+  matern_kappa = 0.5,
+  algorithm = c("sampling", "meanfield"),
+  year_re = FALSE,
+  nb_lower_truncation = 0,
+  control = list(adapt_delta = 0.9),
+  save_log_lik = FALSE,
+  df_lower_bound = 2,
+  cluster = c("pam", "kmeans"),
+  ...
+)
 }
 \arguments{
 \item{formula}{The model formula.}
@@ -95,7 +113,7 @@ Optional values are 1.5 or 2.5. Values of 0.5 are equivalent to exponential.}
 
 \item{algorithm}{Character object describing whether the model should be fit
 with full NUTS MCMC or via the variational inference mean-field approach.
-See \code{\link[rstan:vb]{rstan::vb()}}. Note that the variational inference approach
+See \code{\link[rstan:stanmodel-method-vb]{rstan::vb()}}. Note that the variational inference approach
 should not be trusted for final inference and is much more likely to give
 incorrect inference than MCMC.}
 
@@ -111,7 +129,7 @@ sampling is not vectorized. Also note that the log likelihood values
 returned for estimating quantities like LOOIC will not be correct if
 lower truncation is implemented.}
 
-\item{control}{List to pass to \code{\link[rstan:sampling]{rstan::sampling()}}. For example,
+\item{control}{List to pass to \code{\link[rstan:stanmodel-method-sampling]{rstan::sampling()}}. For example,
 increase \code{adapt_delta} if there are warnings about divergent
 transitions: \code{control = list(adapt_delta = 0.99)}. By default,
 \pkg{glmmfields} sets \code{adapt_delta = 0.9}.}
@@ -128,7 +146,7 @@ convergence. Defaults to 2.}
 locations. \code{"pam"} = \code{\link[cluster:pam]{cluster::pam()}}. The \code{"kmeans"}
 algorithm will be faster on larger datasets.}
 
-\item{...}{Any other arguments to pass to \code{\link[rstan:sampling]{rstan::sampling()}}.}
+\item{...}{Any other arguments to pass to \code{\link[rstan:stanmodel-method-sampling]{rstan::sampling()}}.}
 }
 \description{
 Fit a spatiotemporal random fields model that optionally uses the MVT
