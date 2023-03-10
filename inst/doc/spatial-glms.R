@@ -40,7 +40,7 @@ ggplot(d, aes(lon, lat, colour = m_glm_residuals)) +
 m_spatial <- glmmfields(y ~ temperature,
   data = d, family = Gamma(link = "log"),
   lat = "lat", lon = "lon", nknots = 12, iter = 500, chains = 1,
-  prior_intercept = student_t(3, 0, 10), 
+  prior_intercept = student_t(3, 0, 10),
   prior_beta = student_t(3, 0, 3),
   prior_sigma = half_t(3, 0, 3),
   prior_gp_theta = half_t(3, 0, 10),
@@ -80,12 +80,17 @@ head(p)
 head(tidy(m_spatial, conf.int = TRUE, conf.method = "HPDinterval"))
 
 ## -----------------------------------------------------------------------------
-pred_grid <- expand.grid(lat = seq(min(d$lat), max(d$lat), length.out = 30),
-  lon = seq(min(d$lon), max(d$lon), length.out = 30))
+pred_grid <- expand.grid(
+  lat = seq(min(d$lat), max(d$lat), length.out = 30),
+  lon = seq(min(d$lon), max(d$lon), length.out = 30)
+)
 pred_grid$temperature <- mean(d$temperature)
-pred_grid$prediction <- predict(m_spatial, newdata = pred_grid, 
-  type = "response")$estimate
-ggplot(pred_grid, aes(lon, lat, fill = prediction)) + 
+pred_grid$prediction <- predict(
+  m_spatial,
+  newdata = pred_grid,
+  type = "response"
+)$estimate
+ggplot(pred_grid, aes(lon, lat, fill = prediction)) +
   geom_raster() +
   viridis::scale_fill_viridis()
 

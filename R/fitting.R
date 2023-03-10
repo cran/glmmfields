@@ -56,6 +56,9 @@
 #'   lognormal (specified via [lognormal()] as `lognormal(link = "log")`.
 #'   Besides the negative binomial and lognormal, other families are specified
 #'   as shown in \code{\link[stats]{family}}.
+#' @param binomial_N A character object giving the optional name of the column containing
+#'   Binomial sample size. Leave as `NULL` to fit a spatial GLMM with sample sizes (N) = 1,
+#'   equivalent to bernoulli model.
 #' @param covariance The covariance function of the Gaussian Process.
 #'   One of "squared-exponential", "exponential", or "matern".
 #' @param matern_kappa Optional parameter for the Matern covariance function.
@@ -88,6 +91,7 @@
 #' @param cluster The type of clustering algorithm used to determine the knot
 #'   locations. `"pam"` = [cluster::pam()]. The `"kmeans"`
 #'   algorithm will be faster on larger datasets.
+#' @param offset An optional offset vector.
 #' @param ... Any other arguments to pass to [rstan::sampling()].
 #'
 #' @details
@@ -104,9 +108,10 @@
 #' @export
 #' @importFrom rstan sampling vb
 #' @import Rcpp
-#' @importFrom stats dist model.frame model.matrix model.response rnorm runif
+#' @importFrom stats dist model.frame model.matrix model.response rnorm runif model.offset
 #' @importFrom assertthat assert_that is.count is.number
 #' @importFrom stats gaussian na.omit
+#' @importFrom RcppParallel RcppParallelLibs
 #'
 #' @examples
 #' \donttest{
@@ -158,6 +163,7 @@ glmmfields <- function(formula, data, lon, lat,
                        estimate_df = FALSE,
                        estimate_ar = FALSE,
                        family = gaussian(link = "identity"),
+                       binomial_N = NULL,
                        covariance = c("squared-exponential", "exponential", "matern"),
                        matern_kappa = 0.5,
                        algorithm = c("sampling", "meanfield"),
@@ -167,6 +173,7 @@ glmmfields <- function(formula, data, lon, lat,
                        save_log_lik = FALSE,
                        df_lower_bound = 2,
                        cluster = c("pam", "kmeans"),
+                       offset = NULL,
                        ...) {
 
   # argument checks:
@@ -215,9 +222,16 @@ glmmfields <- function(formula, data, lon, lat,
   y <- model.response(mf, "numeric")
   fixed_intercept <- ncol(X) == 0
 
+  if (is.null(offset)) offset <- rep(0, length(y))
+
   if (is.null(time)) {
     data$null_time_ <- 1
     time <- "null_time_"
+  }
+
+  if (is.null(binomial_N)) {
+    data$null_N_ <- 1
+    binomial_N <- "null_N_"
   }
 
   if ("station" %in% names(list(...))) {
@@ -255,6 +269,7 @@ glmmfields <- function(formula, data, lon, lat,
       prior_rw_sigma = parse_t_prior(prior_rw_sigma),
       prior_beta = parse_t_prior(prior_beta),
       prior_phi = parse_t_prior(prior_phi),
+      offset = offset,
       cov_func = switch(covariance,
         exponential = 0L,
         `squared-exponential` = 1L,
@@ -276,7 +291,8 @@ glmmfields <- function(formula, data, lon, lat,
       matern_kappa = matern_kappa,
       gp_sigma_scaling_factor = gp_sigma_scaling_factor,
       nW = if (fixed_df_value[[1]] > 999 && !estimate_df) 0L else stan_data$nT,
-      df_lower_bound = df_lower_bound
+      df_lower_bound = df_lower_bound,
+      binomialN = data[,binomial_N]
     )
   )
 
@@ -314,6 +330,7 @@ glmmfields <- function(formula, data, lon, lat,
     lon = lon, lat = lat,
     time = time, year_re = year_re,
     station = data_list$stationID, obs_model = obs_model,
+    offset = offset,
     fixed_intercept = fixed_intercept, family = family
   )
   out <- structure(out, class = "glmmfields")

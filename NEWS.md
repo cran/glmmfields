@@ -1,3 +1,19 @@
+# glmmfields 0.1.7
+
+* Rebuild with newest rstantools to avoid CRAN NOTE about C++ version
+
+# glmmfields 0.1.6
+
+* Add back RcppParallel as an import
+
+# glmmfields 0.1.5
+
+* Fully delegate installation to rstantools (#15)
+
+* Other minor fixes to pass R CMD check on R devel
+
+* Add offset functionality
+
 # glmmfields 0.1.4
 
 * Make compatible with updated broom.mixed

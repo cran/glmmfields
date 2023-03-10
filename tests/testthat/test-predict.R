@@ -25,16 +25,18 @@ test_that("predict.glmmfields works", {
     gp_sigma = gp_sigma, sd_obs = sigma, n_knots = nknots, n_data_points = n_data_points
   )
 
+  suppressWarnings({
   m <- glmmfields(y ~ 0,
     data = s$dat, time = "time",
     lat = "lat", lon = "lon", nknots = nknots,
     iter = ITER, chains = CHAINS, seed = SEED,
     estimate_df = FALSE, fixed_df_value = df
   )
+  })
 
   p <- predict(m)
-  p_newdata <- predict(m, newdata = s$dat)
-  p_newdata2 <- predict(m, newdata = m$data)
+  p_newdata <- predict(m, newdata = s$dat, offset = rep(0, nrow(s$dat)))
+  p_newdata2 <- predict(m, newdata = m$data, offset = rep(0, nrow(s$dat)))
 
   plot(s$dat$y, p$estimate)
   plot(s$dat$y, p_newdata$estimate)
@@ -48,11 +50,12 @@ test_that("predict.glmmfields works", {
 
   # with a subset of data
   random_subset <- sample(seq_len(nrow(s$dat)), size = 200)
-  p_newdata <- predict(m, newdata = s$dat[random_subset, ])
+  p_newdata <- predict(m, newdata = s$dat[random_subset, ],
+                        offset = rep(0, nrow(s$dat[random_subset, ])))
   plot(s$dat$y[random_subset], p_newdata$estimate)
   expect_gte(cor(s$dat$y[random_subset], p_newdata$estimate), 0.75)
 
   nd <- s$dat
   nd$y <- NULL
-  p <- predict(m, newdata = nd)
+  p <- predict(m, newdata = nd, offset = rep(0, nrow(nd)))
 })

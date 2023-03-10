@@ -25,6 +25,7 @@
   interval = c("confidence", "prediction"),
   type = c("link", "response"),
   return_mcmc = FALSE,
+  offset = NULL,
   iter = "all",
   ...
 )
@@ -49,6 +50,8 @@
 
 \item{return_mcmc}{Logical. Should the full MCMC draws be returned for the
 predictions?}
+
+\item{offset}{Optional offset vector to be used in prediction.}
 
 \item{iter}{Number of MCMC iterations to draw. Defaults to all.}
 }
@@ -104,7 +107,7 @@ pred_grid <- expand.grid(
 )
 pred_grid$prediction <- predict(m,
   newdata = pred_grid, type = "response", iter = 100,
-  estimate_method = "median"
+  estimate_method = "median", offset = rep(0, nrow(pred_grid))
 )$estimate
 
 ggplot(pred_grid, aes(lon, lat, fill = prediction)) +

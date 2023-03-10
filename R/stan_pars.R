@@ -14,11 +14,12 @@ stan_pars <- function(obs_error, estimate_df = TRUE, est_temporalRE = FALSE,
                       estimate_ar = FALSE, fixed_intercept = FALSE,
                       save_log_lik = FALSE) {
   p <- c(
+    #"y_new",
     "gp_sigma",
     "gp_theta",
     "B",
     switch(obs_error[[1]], lognormal = "sigma", gaussian = "sigma",
-      gamma = "CV", nb2 = "nb2_phi"
+      gamma = "CV", nbinom2 = "nb2_phi"
     ),
     "spatialEffectsKnots"
   )

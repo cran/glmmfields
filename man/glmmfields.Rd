@@ -23,6 +23,7 @@ glmmfields(
   estimate_df = FALSE,
   estimate_ar = FALSE,
   family = gaussian(link = "identity"),
+  binomial_N = NULL,
   covariance = c("squared-exponential", "exponential", "matern"),
   matern_kappa = 0.5,
   algorithm = c("sampling", "meanfield"),
@@ -32,6 +33,7 @@ glmmfields(
   save_log_lik = FALSE,
   df_lower_bound = 2,
   cluster = c("pam", "kmeans"),
+  offset = NULL,
   ...
 )
 }
@@ -105,6 +107,10 @@ lognormal (specified via \code{\link[=lognormal]{lognormal()}} as \code{lognorma
 Besides the negative binomial and lognormal, other families are specified
 as shown in \code{\link[stats]{family}}.}
 
+\item{binomial_N}{A character object giving the optional name of the column containing
+Binomial sample size. Leave as \code{NULL} to fit a spatial GLMM with sample sizes (N) = 1,
+equivalent to bernoulli model.}
+
 \item{covariance}{The covariance function of the Gaussian Process.
 One of "squared-exponential", "exponential", or "matern".}
 
@@ -145,6 +151,8 @@ convergence. Defaults to 2.}
 \item{cluster}{The type of clustering algorithm used to determine the knot
 locations. \code{"pam"} = \code{\link[cluster:pam]{cluster::pam()}}. The \code{"kmeans"}
 algorithm will be faster on larger datasets.}
+
+\item{offset}{An optional offset vector.}
 
 \item{...}{Any other arguments to pass to \code{\link[rstan:stanmodel-method-sampling]{rstan::sampling()}}.}
 }
