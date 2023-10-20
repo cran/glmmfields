@@ -2,12 +2,12 @@
 library("knitr")
 opts_chunk$set(message = FALSE, fig.width = 5.5)
 
-## ---- message=FALSE, warning=FALSE--------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------
 library(glmmfields)
 library(ggplot2)
 library(dplyr)
 
-## ---- echo=TRUE, eval=FALSE---------------------------------------------------
+## ----echo=TRUE, eval=FALSE----------------------------------------------------
 #  options(mc.cores = parallel::detectCores())
 
 ## ----simulate-data------------------------------------------------------------
@@ -36,7 +36,7 @@ ggplot(d, aes(lon, lat, colour = m_glm_residuals)) +
   scale_color_gradient2() +
   geom_point(size = 3)
 
-## ---- results='hide'----------------------------------------------------------
+## ----results='hide'-----------------------------------------------------------
 m_spatial <- glmmfields(y ~ temperature,
   data = d, family = Gamma(link = "log"),
   lat = "lat", lon = "lon", nknots = 12, iter = 500, chains = 1,
